@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.store.utils.JdbcTools;
 import com.store.utils.PageBean;
 import com.store.utils.StoreConstants;
@@ -146,7 +148,7 @@ public abstract class AbstractDao {
 			ResultSetMetaData rsmd = rs.getMetaData();
 
 			if(rs.next()) {
-				for (int i=0;i<rsmd.getColumnCount();i++) {
+				for (int i=1;i<=rsmd.getColumnCount();i++) {
 					String columnName = rsmd.getColumnName(i);
 					results.put(columnName, rs.getObject(columnName));
 				}
@@ -179,7 +181,7 @@ public abstract class AbstractDao {
 			for (int i=0;i<params.length;i++) {
 				if (params[i] instanceof String) {
 					if (searchType != null) {
-						if (StoreConstants.SEARCH_TYPE_WILDCARD == searchType[i]) {
+						if (StoreConstants.SEARCH_TYPE_WILDCARD == searchType[i] && !StringUtils.isEmpty(String.valueOf(params[i]))) {
 							preparedStatement.setString(idx, "%" + String.valueOf(params[i]) + "%");
 						} else {
 							preparedStatement.setString(idx, String.valueOf(params[i]));
@@ -190,7 +192,7 @@ public abstract class AbstractDao {
 				} else if (params[i] instanceof Date) {
 					Date date = (Date) params[i];
 					if (searchType != null) {
-						if (StoreConstants.SEARCH_TYPE_BETWEEN == searchType[i]) {
+						if (StoreConstants.SEARCH_TYPE_BETWEEN == searchType[i] && date != null) {
 							preparedStatement.setDate(idx, new java.sql.Date(date.getTime()));
 							idx++;
 							preparedStatement.setDate(idx, new java.sql.Date(date.getTime()));
@@ -214,7 +216,7 @@ public abstract class AbstractDao {
 
 			while(rs.next()) {
 				Map<String, Object> results = new HashMap<String,Object>();
-				for (int i=0;i<rsmd.getColumnCount();i++) {
+				for (int i=1;i<=rsmd.getColumnCount();i++) {
 					String columnName = rsmd.getColumnName(i);
 					results.put(columnName, rs.getObject(columnName));
 				}
@@ -254,7 +256,7 @@ public abstract class AbstractDao {
 			for (int i=0;i<paramSize;i++) {
 				if (params[i] instanceof String) {
 					if (searchType != null) {
-						if (searchType[i] != null && StoreConstants.SEARCH_TYPE_WILDCARD == searchType[i]) {
+						if (searchType[i] != null && StoreConstants.SEARCH_TYPE_WILDCARD == searchType[i] && !StringUtils.isEmpty(String.valueOf(params[i]))) {
 							preparedStatement.setString(idx, "%" + String.valueOf(params[i]) + "%");
 						} else {
 							preparedStatement.setString(idx, String.valueOf(params[i]));
@@ -265,7 +267,7 @@ public abstract class AbstractDao {
 				} else if (params[i] instanceof Date) {
 					Date date = (Date) params[i];
 					if (searchType != null) {
-						if (StoreConstants.SEARCH_TYPE_BETWEEN == searchType[i]) {
+						if (StoreConstants.SEARCH_TYPE_BETWEEN == searchType[i] && date != null) {
 							preparedStatement.setDate(idx, new java.sql.Date(date.getTime()));
 							idx++;
 							preparedStatement.setDate(idx, new java.sql.Date(date.getTime()));

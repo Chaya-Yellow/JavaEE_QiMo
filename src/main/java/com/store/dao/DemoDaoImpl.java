@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.store.utils.PageBean;
+import com.store.utils.StoreConstants;
 
 public class DemoDaoImpl extends AbstractDao implements DemoDao {
 
@@ -18,6 +19,12 @@ public class DemoDaoImpl extends AbstractDao implements DemoDao {
 		String sql = "select user_id,user_name from user where user_id=?";
 		return this.queryOne(sql, new Object[] {userId});
 	}
+	
+	@Override
+	public Map<String, Object> getOneProduct(Long pid) {
+		String sql = "select * from product where pid=?";
+		return this.queryOne(sql, new Object[] {pid});
+	}
 
 	@Override
 	public List<Map<String, Object>> findUsers() {
@@ -26,9 +33,13 @@ public class DemoDaoImpl extends AbstractDao implements DemoDao {
 	}
 
 	@Override
-	public PageBean findInfosByPage(int pageNumber, int pageSize) {
-		String sql = "select * from product";
-		return this.queryByPage(sql, new Object[] {}, pageNumber, pageSize, null);
+	public PageBean findInfosByPage(int pageNumber, int pageSize, String productName) {
+		String sql = "select * from product where cid=? and product_name like ?";
+		return this.queryByPage(sql, new Object[] {productName}, pageNumber, pageSize, new Integer[] {StoreConstants.SEARCH_TYPE_NORMAL,StoreConstants.SEARCH_TYPE_WILDCARD});
 	}
-
+	
+	public List findProducts() {
+		String sql = "select * from product";
+		return this.queryList(sql, new Object[] {}, null);
+	}
 }

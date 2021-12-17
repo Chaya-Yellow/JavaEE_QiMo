@@ -34,6 +34,14 @@
 				padding: 0 10px;
 			}
 		</style>
+		<script type="text/javascript">
+window.onload=function(){
+	
+	document.getElementById("btn_cart").onclick=function() {
+		location.href="/demoAction?action=my_shopcart";
+	}
+}
+</script>
 	</head>
 
 	<body>
@@ -41,6 +49,7 @@
 <%@ include file="/jsp/header.jsp" %>
 
 		<div class="container">
+		<input type="button" value="我的购物车" id="btn_cart"> 
 		
 				 <div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
 			
@@ -59,31 +68,31 @@
 								<th>小计</th>
 								<th>操作</th>
 							</tr>
-			
+						  <c:forEach items="${shopCartList }" var="item">
 							<tr class="active">
 								<td width="60" width="40%">
-									<input type="hidden" name="id" value="22">
-									<img src="" width="70" height="60">
+									<input type="hidden" name="pid" value="22">
+									<img src="${item.value.product.pImage }" width="70" height="60">
 								</td>
 								<td width="30%">
-									<a target="_blank">pname</a>
+									<a target="_blank">Pname</a>
 								</td>
 								<td width="20%">
 									￥
 								</td>
 								<td width="10%">
-									<input type="text" name="quantity" value="" maxlength="4" size="10">
+									<input type="text" name="quantity" value="${item.key }" maxlength="4" size="10">
 								</td>
 								<td width="15%">
-									<span class="subtotal">￥</span>
+									<span class="pName"><c:out value="${item.value.product.pname }" /></span>
 								</td>
 								<td>
 									<%-- <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> --%>
-									<input type="hidden" name="pid" value="${item.product.pid}"/>
-									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a> 
+									<input type="hidden" name="pid" value="${item.value.product.pid}"/>
+									<a href="javascript:void(0);" title="${item.value.product.pid}" class="delete" id="${item.value.product.pid}">删除</a> 
 								</td>
 							</tr>
-	
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -107,7 +116,8 @@
 			</div>
 				
 			
-	
+			
+			
 		</div>
 
 <%@ include file="/jsp/footer.jsp" %>

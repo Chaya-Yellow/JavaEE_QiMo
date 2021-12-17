@@ -8,6 +8,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+ul,li{
+	list-style: none;
+}
+ul img{
+	width: 50px;
+	height: 50px;
+}
+.pName{
+	font: 14px/50px;
+	font-weight: bold;
+}
+.uPrice{
+	font: 12px/50px;
+	font-weight: bold;
+	color: red;
+}
+.shopCart{
+	width:800px;
+	height: 500px;
+	overflow: auto;
+	font-size: 12px;
+}
+.orderMsg{
+	font-size: 14px;
+	font-weight:bold;
+	color: red;
+}
+</style>
 <script type="text/javascript">
 window.onload=function(){
 	
@@ -15,11 +44,15 @@ window.onload=function(){
 		location.href="/demoAction?action=list";
 	}
 	
+	document.getElementById("btn_cart").onclick=function() {
+		location.href="/demoAction?action=my_shopcart";
+	}
 }
 </script>
 </head>
 <body>
 	<!-- 用户增加 -->
+	<h1>用户注册例子</h1>
 	<form method="post" action="/demoAction">
 		<input type="text" name="user_id">
 		<input type="text" name="user_name">
@@ -27,6 +60,32 @@ window.onload=function(){
 		<input type="submit" value="注册"> ${msg}
 	</form>
 	
+	<br>
+	<h1>购物车例子</h1>
+	<form method="post" action="/demoAction">
+	<input type="button" value="我的购物车" id="btn_cart"> 
+	<input type="submit" value="生成订单" id="btn_create_order"> <span class="orderMsg">${order_msg }</span>
+	<br>
+	<c:if test="${not empty shopCartList}">
+		
+		<input type="hidden" name="action" value="create_order">
+	<div class="shopCart">	
+		<ul>
+		<c:forEach var="item" items="${shopCartList }" varStatus="vs">
+			<li>
+			<input type="checkbox" name="shopChk" value="${item.key }">
+			<img src="${item.value.product.pImage }">
+			<a href="">
+			<span class="pName"><c:out value="${item.value.product.pname }" /></span>
+			</a>
+			<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+			购买数量：<input type="number" min="0" max="99" name="shopNum"/>
+			</li>
+		</c:forEach>
+		</ul>
+		</div>
+	</c:if>
+	</form>
 	<br>
 	<h2>查詢列表的例子</h2>
 
