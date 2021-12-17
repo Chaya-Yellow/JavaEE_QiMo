@@ -46,7 +46,7 @@ window.onload=function(){
 
 	<body>
 
-<%@ include file="/jsp/header.jsp" %>
+<%--<%@ include file="/jsp/header.jsp" %>--%>
 
 		<div class="container">
 		<input type="button" value="我的购物车" id="btn_cart"> 
