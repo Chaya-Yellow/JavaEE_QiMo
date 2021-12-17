@@ -120,7 +120,7 @@ window.onload=function(){
 			
 		</div>
 
-<%@ include file="/jsp/footer.jsp" %>
+<%--<%@ include file="/jsp/footer.jsp" %>--%>
 
 	</body>
 <script>
