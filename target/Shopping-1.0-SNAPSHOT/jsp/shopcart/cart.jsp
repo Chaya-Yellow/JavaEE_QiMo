@@ -7,8 +7,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>会员登录</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 		<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 		<!-- 引入自定义css文件 style.css -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" />
 		<style>
@@ -93,14 +96,14 @@
 				<div style="text-align:right;">
 					<em style="color:#ff6600;">
 				登录后确认是否享有优惠&nbsp;&nbsp;
-			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥元</strong>
+			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥?元</strong>
 				</div>
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 					<a href="javascript:void(0)" id="clear" class="clear">清空购物车</a>
 					
 					<a href="">
 						<%--提交表单 --%>
-						<input type="button" width="100" value="提交订单" name="submit" border="0" style="background: url('${pageContext.request.contextPath}/img/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+						<input type="button" class="btn btn-warning" value="提交订单" name="submit" );
 						height:35px;width:100px;color:white;">
 					</a>
 				</div>
