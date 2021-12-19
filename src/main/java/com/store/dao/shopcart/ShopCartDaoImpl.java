@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import com.store.domain.Order;
 import com.store.domain.OrderItem;
+import com.store.domain.Product;
 import com.store.utils.JdbcTools;
 
 public class ShopCartDaoImpl implements ShopCartDao {
@@ -75,6 +77,16 @@ public class ShopCartDaoImpl implements ShopCartDao {
 			JdbcTools.release(connection, new PreparedStatement[] {preparedStatement4Order,preparedStatement4OrderItem}, idRs);
 		}
 		return amt;
+	}
+
+	@Override
+	public List<Product> findProducts() {
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getOneProduct(Long pid) {
+		return null;
 	}
 
 }

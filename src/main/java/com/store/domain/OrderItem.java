@@ -4,6 +4,7 @@ public class OrderItem {
 	private Long itemId;
 	private Integer quantity;
 	private Double total;
+	private Integer shopAmount=0;
 	private Long pid;
 	private Long oid;
 	public Long getItemId() {
@@ -11,6 +12,9 @@ public class OrderItem {
 	}
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
+	}
+	public int getShopAmount() {
+		return shopAmount;
 	}
 	public Integer getQuantity() {
 		return quantity;
