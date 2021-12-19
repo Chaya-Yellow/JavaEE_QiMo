@@ -6,7 +6,6 @@
         <exploded>true</exploded>
         <module>JavaEE_QiMo</module>
         <packaging>war</packaging>
-        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="root">

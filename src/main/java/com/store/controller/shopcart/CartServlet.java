@@ -47,6 +47,35 @@ public class CartServlet extends HttpServlet{
 		//从session获取购物车信息
 		Map<String, ShopItem> carts = (Map<String, ShopItem>) session.getAttribute("shop_carts");
 
+		if (carts == null) {
+			carts = new HashMap<String, ShopItem>();
+
+			List<Map<String, Object>> products  = CartService.findProducts();
+
+			if (products != null) {
+				for (Map<String, Object> productMap : products) {
+
+					ShopItem shopItem = new ShopItem();
+					Product product = new Product();
+					product.setPid(Long.parseLong(productMap.get("pid").toString()));
+					product.setPname(productMap.get("pname").toString());
+					product.setpImage(productMap.get("pimage").toString());
+					product.setMarketPrice(Double.parseDouble(productMap.get("market_price").toString()));
+					product.setShopPrice(Double.parseDouble(productMap.get("shop_price").toString()));
+					product.setCid(Long.parseLong(productMap.get("cid").toString()));
+					product.setpDesc(productMap.get("pdesc").toString());
+					product.setpState(productMap.get("pstate").toString());
+
+					shopItem.setProduct(product);
+					shopItem.setShopAmount(1);
+
+					carts.put(product.getPid().toString(), shopItem);
+				}
+			}
+
+			session.setAttribute("shopCartList", carts);
+		}
+
 		//添加商品到购物车
 		if(action != null && action.equals("add")) {
 			if (carts == null) {
@@ -65,7 +94,7 @@ public class CartServlet extends HttpServlet{
 			queryCarts(carts);
 		}
 
-		req.getRequestDispatcher("/shopping_cart.jsp").forward(req, resp);
+		req.getRequestDispatcher("/cart.jsp").forward(req, resp);
 	}
 	/**
 	 * 添加商品到购物车
@@ -77,7 +106,7 @@ public class CartServlet extends HttpServlet{
 		if (shopItem == null) {
 			shopItem = new ShopItem();
 			Product product = new Product();
-			product.setPid(product.getPid());
+			product.setPid(Long.valueOf(productId));
 			product.setPname(productName);
 			product.setShopPrice(12.0D);
 			shopItem.setProduct(product);
@@ -120,6 +149,7 @@ public class CartServlet extends HttpServlet{
 			}
 			System.out.println("费用合计："+ totalPrice);
 		}
+
 		}
 
 

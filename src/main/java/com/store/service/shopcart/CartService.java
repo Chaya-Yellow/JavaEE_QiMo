@@ -11,5 +11,12 @@ public interface CartService {
 	public List<Map<String, Object>> findUsers();
 	public PageBean findInfosByPage(int pageNumber, int pageSize, String productName);
 	public int createOrder(String[] shopChks, String[] shopNums, Long uid);
-	public List findProducts();
+
+	//	public static List findProducts() {
+//		return null;
+//	}
+	public static List findProducts() {
+		return null;
+	}
 }
+

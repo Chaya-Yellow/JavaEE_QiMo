@@ -52,10 +52,9 @@
 <%@ include file="/jsp/header.jsp" %>
 
 		<div class="container">
-		
-				 <div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
-			
-			
+				<c:if test="${empty shopCartList}">
+					<div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
+				</c:if>
 
 			<div class="row">
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -71,30 +70,46 @@
 								<th>操作</th>
 							</tr>
 
-							<c:forEach items="${shopCartList }" var="item">
-							<tr class="active">
-								<td width="60" width="40%">
-									<input type="hidden" name="id" value="22">
-									<img src="${item.value.product.pImage }" width="70" height="60">
-								</td>
-								<td width="30%">
-									<a target="_blank">Empty</a>
-								</td>
-								<td width="20%">
-									￥
-								</td>
-								<td width="10%">
-									<input type="text" name="quantity" value="${item.key }" maxlength="4" size="10">
-								</td>
-								<td width="15%">
-									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥</span>
-								</td>
-								<td>
-									<%-- <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> --%>
-									<input type="hidden" name="pid" value="${item.product.pid}"/>
-									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a> 
-								</td>
-							</tr>
+<%--							<c:forEach items="${shopCartList }" var="item">--%>
+<%--							<tr class="active">--%>
+<%--								<td width="60" width="40%">--%>
+<%--									<input type="hidden" name="id" value="22">--%>
+<%--									<img src="${item.value.product.pImage }" width="70" height="60">--%>
+<%--								</td>--%>
+
+<%--								<td>--%>
+<%--									<input type="checkbox">--%>
+<%--								</td>--%>
+
+<%--								<td width="30%">--%>
+<%--									<a target="_blank">Empty</a>--%>
+<%--								</td>--%>
+<%--								<td width="20%">--%>
+<%--									￥--%>
+<%--								</td>--%>
+<%--								<td width="10%">--%>
+<%--									<input type="text" name="quantity" value="${item.key }" maxlength="4" size="10">--%>
+<%--								</td>--%>
+<%--								<td width="15%">--%>
+<%--									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥${item.value.product.shop_price}</span>--%>
+<%--								</td>--%>
+<%--								<td>--%>
+<%--									&lt;%&ndash; <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> &ndash;%&gt;--%>
+<%--									<input type="hidden" name="pid" value="${item.product.pid}"/>--%>
+<%--									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a> --%>
+<%--								</td>--%>
+<%--							</tr>--%>
+<%--							</c:forEach>--%>
+							<c:forEach var="item" items="${shopCartList }" varStatus="vs">
+								<li>
+									<input type="checkbox" name="shopChk" value="${item.key }">
+									<img src="${item.value.product.pImage }">
+									<a href="">
+										<span class="pName"><c:out value="${item.value.product.pname }" /></span>
+									</a>
+									<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+									购买数量：<input type="number" min="0" max="99" name="shopNum"/>
+								</li>
 							</c:forEach>
 	
 						</tbody>
@@ -106,7 +121,7 @@
 				<div style="text-align:right;">
 					<em style="color:#ff6600;">
 				登录后确认是否享有优惠&nbsp;&nbsp;
-			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥${item.product.shop_price}元</strong>
+			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥${totalPrice}元</strong>
 				</div>
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 					<a href="javascript:void(0)" id="clear" class="clear">清空购物车</a>
