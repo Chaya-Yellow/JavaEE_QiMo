@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>会员登录</title>
+		<title>我的购物车</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 		<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/javascript"></script>
@@ -37,6 +37,14 @@
 				padding: 0 10px;
 			}
 		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+
+				document.getElementById("btn_cart").onclick=function() {
+					location.href="/demoAction?action=my_shopcart";
+				}
+			}
+		</script>
 	</head>
 
 	<body>
@@ -44,10 +52,9 @@
 <%@ include file="/jsp/header.jsp" %>
 
 		<div class="container">
-		
-				 <div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
-			
-			
+				<c:if test="${empty shopCartList}">
+					<div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
+				</c:if>
 
 			<div class="row">
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -55,37 +62,71 @@
 					<table class="table table-bordered">
 						<tbody>
 							<tr class="warning">
+								<th>勾选</th>
 								<th>图片</th>
 								<th>商品</th>
-								<th>价格</th>
+								<th>名称</th>
+								<th>单价</th>
 								<th>数量</th>
-								<th>小计</th>
+								<th>金额</th>
 								<th>操作</th>
 							</tr>
-			
+
+							<c:forEach items="${shopCartList }" var="item">
 							<tr class="active">
-								<td width="60" width="40%">
-									<input type="hidden" name="id" value="22">
-									<img src="" width="70" height="60">
-								</td>
-								<td width="30%">
-									<a target="_blank">pname</a>
-								</td>
-								<td width="20%">
-									￥
-								</td>
-								<td width="10%">
-									<input type="text" name="quantity" value="" maxlength="4" size="10">
-								</td>
-								<td width="15%">
-									<span class="subtotal">￥</span>
-								</td>
-								<td>
+								<li>
+									<input type="checkbox" name="shopChk" value="${item.key }">--%>
+								</li>
+
+								<li width="60" width="40%">
+<%--									<input type="hidden" name="id" value="22">--%>
+									<img src="${item.value.product.pImage }" width="70" height="60">
+								</li>
+
+<%--								<td>--%>
+<%--									<input type="checkbox" name="shopChk" value="${item.key}>--%>
+<%--								</td>--%>
+
+<%--								<li width="40%">--%>
+<%--									<a target="_blank">Empty</a>--%>
+<%--								</li>--%>
+								<li width="60" width="40%">
+										<%--									<input type="hidden" name="id" value="22">--%>
+									<img src="${item.value.product.pName }" width="70" height="60">
+								</li>
+
+								<li width="20%">
+									￥<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+								</li>
+								<li width="10%">
+									<input type="text" name="quantity" value="${item.value.product.quantity}" maxlength="4" size="10">
+								</li>
+<%--								<td width="15%">--%>
+<%--									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥${item.value.product.shop_price}</span>--%>
+<%--								</td>--%>
+								<li width="10%">
+									<input type="text" name="amountPrice" value="${item.value.product.quantity}*${item.value.product.shopPrice}" maxlength="4" size="10">
+								</li>
+
+								<li>
 									<%-- <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> --%>
 									<input type="hidden" name="pid" value="${item.product.pid}"/>
-									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a> 
-								</td>
+									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a>
+								</li>
 							</tr>
+							</c:forEach>
+
+<%--							<c:forEach var="item" items="${shopCartList }" varStatus="vs">--%>
+<%--								<li>--%>
+<%--									<input type="checkbox" name="shopChk" value="${item.key }">--%>
+<%--									<img src="${item.value.product.pImage }">--%>
+<%--									<a href="">--%>
+<%--										<span class="pName"><c:out value="${item.value.product.pname }" /></span>--%>
+<%--									</a>--%>
+<%--									<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;--%>
+<%--									购买数量：<input type="number" min="0" max="99" name="shopNum"/>--%>
+<%--								</li>--%>
+<%--							</c:forEach>--%>
 	
 						</tbody>
 					</table>
@@ -96,15 +137,14 @@
 				<div style="text-align:right;">
 					<em style="color:#ff6600;">
 				登录后确认是否享有优惠&nbsp;&nbsp;
-			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥?元</strong>
+			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥${totalPrice}元</strong>
 				</div>
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 					<a href="javascript:void(0)" id="clear" class="clear">清空购物车</a>
 					
 					<a href="">
 						<%--提交表单 --%>
-						<input type="button" class="btn btn-warning" value="提交订单" name="submit" );
-						height:35px;width:100px;color:white;">
+						<input type="button" class="btn btn-warning" value="提交订单" name="submit">
 					</a>
 				</div>
 			</div>

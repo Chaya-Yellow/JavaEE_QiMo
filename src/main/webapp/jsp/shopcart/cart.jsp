@@ -62,55 +62,73 @@
 					<table class="table table-bordered">
 						<tbody>
 							<tr class="warning">
+								<th>勾选</th>
 								<th>图片</th>
 								<th>商品</th>
-								<th>价格</th>
+								<th>名称</th>
+								<th>单价</th>
 								<th>数量</th>
-								<th>小计</th>
+								<th>金额</th>
 								<th>操作</th>
 							</tr>
 
-<%--							<c:forEach items="${shopCartList }" var="item">--%>
-<%--							<tr class="active">--%>
-<%--								<td width="60" width="40%">--%>
+							<c:forEach items="${shopCartList }" var="item">
+							<tr class="active">
+								<li>
+									<input type="checkbox" name="shopChk" value="${item.key }">--%>
+								</li>
+
+								<li width="60" width="40%">
 <%--									<input type="hidden" name="id" value="22">--%>
-<%--									<img src="${item.value.product.pImage }" width="70" height="60">--%>
-<%--								</td>--%>
+									<img src="${item.value.product.pImage }" width="70" height="60">
+								</li>
 
 <%--								<td>--%>
-<%--									<input type="checkbox">--%>
+<%--									<input type="checkbox" name="shopChk" value="${item.key}>--%>
 <%--								</td>--%>
 
-<%--								<td width="30%">--%>
+<%--								<li width="40%">--%>
 <%--									<a target="_blank">Empty</a>--%>
-<%--								</td>--%>
-<%--								<td width="20%">--%>
-<%--									￥--%>
-<%--								</td>--%>
-<%--								<td width="10%">--%>
-<%--									<input type="text" name="quantity" value="${item.key }" maxlength="4" size="10">--%>
-<%--								</td>--%>
+<%--								</li>--%>
+								<li width="60" width="40%">
+										<%--									<input type="hidden" name="id" value="22">--%>
+									<img src="${item.value.product.pName }" width="70" height="60">
+								</li>
+
+								<li width="20%">
+									￥<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+								</li>
+								<li width="10%">
+									<a href="#" class="J_Minus no-minus">-</a>
+									<input type="text" name="quantity" value="${item.value.product.quantity}" maxlength="4" size="10">
+									<a href="#" class="J_Plus plus">+</a>
+								</li>
 <%--								<td width="15%">--%>
 <%--									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥${item.value.product.shop_price}</span>--%>
 <%--								</td>--%>
-<%--								<td>--%>
-<%--									&lt;%&ndash; <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> &ndash;%&gt;--%>
-<%--									<input type="hidden" name="pid" value="${item.product.pid}"/>--%>
-<%--									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a> --%>
-<%--								</td>--%>
-<%--							</tr>--%>
-<%--							</c:forEach>--%>
-							<c:forEach var="item" items="${shopCartList }" varStatus="vs">
-								<li>
-									<input type="checkbox" name="shopChk" value="${item.key }">
-									<img src="${item.value.product.pImage }">
-									<a href="">
-										<span class="pName"><c:out value="${item.value.product.pname }" /></span>
-									</a>
-									<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
-									购买数量：<input type="number" min="0" max="99" name="shopNum"/>
+								<li width="10%">
+									<input type="text" name="amountPrice" value="${item.value.product.quantity}*${item.value.product.shopPrice}" maxlength="4" size="10">
 								</li>
+
+								<li>
+									<%-- <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> --%>
+									<input type="hidden" name="pid" value="${item.product.pid}"/>
+									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a>
+								</li>
+							</tr>
 							</c:forEach>
+
+<%--							<c:forEach var="item" items="${shopCartList }" varStatus="vs">--%>
+<%--								<li>--%>
+<%--									<input type="checkbox" name="shopChk" value="${item.key }">--%>
+<%--									<img src="${item.value.product.pImage }">--%>
+<%--									<a href="">--%>
+<%--										<span class="pName"><c:out value="${item.value.product.pname }" /></span>--%>
+<%--									</a>--%>
+<%--									<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;--%>
+<%--									购买数量：<input type="number" min="0" max="99" name="shopNum"/>--%>
+<%--								</li>--%>
+<%--							</c:forEach>--%>
 	
 						</tbody>
 					</table>
