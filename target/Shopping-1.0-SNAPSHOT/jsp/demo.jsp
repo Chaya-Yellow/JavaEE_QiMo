@@ -41,11 +41,11 @@ ul img{
 window.onload=function(){
 	
 	document.getElementById("search").onclick=function() {
-		location.href="/demoAction?action=list";
+		location.href="/JavaEE_QiMo/demoAction?action=list";
 	}
 	
 	document.getElementById("btn_cart").onclick=function() {
-		location.href="/demoAction?action=my_shopcart";
+		location.href="/JavaEE_QiMo/demoAction?action=my_shopcart";
 	}
 }
 </script>
