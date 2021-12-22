@@ -8,12 +8,13 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import com.store.dao.AbstractDao;
 import com.store.domain.Order;
 import com.store.domain.OrderItem;
 import com.store.domain.Product;
 import com.store.utils.JdbcTools;
 
-public class ShopCartDaoImpl implements ShopCartDao {
+public class ShopCartDaoImpl extends AbstractDao implements ShopCartDao {
 
 	@Override
 	public int createOrder(Order order) {
@@ -87,6 +88,13 @@ public class ShopCartDaoImpl implements ShopCartDao {
 	@Override
 	public Map<String, Object> getOneProduct(Long pid) {
 		return null;
+	}
+
+	public int updateOrderState(Long oid, String state) {
+		String sql = "update orders set state=? where oid=?";
+		this.update(sql, new Object[]{state, oid});
+
+		return 0;
 	}
 
 }

@@ -119,6 +119,7 @@
 								</li>
 
 								<li width="20%">
+									￥<span class="uPrice"><c:out value="${item.value.product.MarketPrice }" />元</span>
 									￥<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
 								</li>
 								<li width="10%">
@@ -160,19 +161,28 @@
 			</div>
 
 			<div style="margin-right:130px;">
-				<div style="text-align:right;">
+				<div style="text-align:left;float: left">
 					<em style="color:#ff6600;">
 				登录后确认是否享有优惠&nbsp;&nbsp;
-			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥${totalPrice}元</strong>
+			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp;<br>
 				</div>
-				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
+				<div style="text-align: right">
+					商品金额: <strong style="color:#ff6600;">￥${totalPrice}元</strong>
+				</div>
+
+				<div style="text-align:left;margin-top:10px;margin-bottom:10px;float: left">
 					<a href="javascript:void(0)" id="clear" class="clear">清空购物车</a>
 					
 <%--					<a href="">--%>
+				</div>
+				<div style="text-align:right;margin-top:10px;margin-bottom:10px;float:right">
+					<a href="">
 						<%--提交表单 --%>
 						<input type="submit" class="btn_create_order btn-warning" value="提交订单" name="submit"><span class="orderMsg">${order_msg }</span>
 					</a>
 				</div>
+
+
 			</div>
 				
 			
