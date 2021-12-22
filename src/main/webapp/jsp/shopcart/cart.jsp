@@ -41,7 +41,7 @@
 			window.onload=function(){
 
 				document.getElementById("btn_cart").onclick=function() {
-					location.href="/demoAction?action=my_shopcart";
+					location.href="/JavaEE_QiMo/cartAction?action=my_shopcart";
 				}
 			}
 		</script>
@@ -56,6 +56,30 @@
 					<div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
 				</c:if>
 
+			<input type="button" value="我的购物车" id="btn_cart">
+			<input type="button" value="我的购物车" id="btn_cart">
+			<input type="submit" value="生成订单" id="btn_create_order"> <span class="orderMsg">${order_msg }</span>
+			<br>
+			<c:if test="${not empty shopCartList}">
+
+				<input type="hidden" name="action" value="create_order">
+				<div class="shopCart">
+					<ul>
+						<c:forEach var="item" items="${shopCartList }" varStatus="vs">
+							<li>
+								<input type="checkbox" name="shopChk" value="${item.key }">
+								<img src="${item.value.product.pImage }">
+								<a href="">
+									<span class="pName"><c:out value="${item.value.product.pname }" /></span>
+								</a>
+								<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+								购买数量：<input type="number" min="0" max="99" name="shopNum"/>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+
 			<div class="row">
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
 					<strong style="font-size:16px;margin:5px 0;">订单详情</strong>
@@ -65,14 +89,13 @@
 								<th>勾选</th>
 								<th>图片</th>
 								<th>商品</th>
-								<th>名称</th>
 								<th>单价</th>
 								<th>数量</th>
 								<th>金额</th>
 								<th>操作</th>
 							</tr>
 
-							<c:forEach items="${shopCartList }" var="item">
+							<c:forEach var="item" items="${shopCartList }" varStatus="vs">
 							<tr class="active">
 								<li>
 									<input type="checkbox" name="shopChk" value="${item.key }">--%>
@@ -91,17 +114,18 @@
 <%--									<a target="_blank">Empty</a>--%>
 <%--								</li>--%>
 								<li width="60" width="40%">
-										<%--									<input type="hidden" name="id" value="22">--%>
-									<img src="${item.value.product.pName }" width="70" height="60">
+									<%--									<input type="hidden" name="id" value="22">--%>
+									<span class="pName"><c:out value="${item.value.product.pname }" /></span>
 								</li>
 
 								<li width="20%">
 									￥<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
 								</li>
 								<li width="10%">
-									<a href="#" class="J_Minus no-minus">-</a>
-									<input type="text" name="quantity" value="${item.value.product.quantity}" maxlength="4" size="10">
-									<a href="#" class="J_Plus plus">+</a>
+<%--									<a href="#" class="J_Minus no-minus">-</a>--%>
+<%--									<input type="text" name="quantity" value="${item.value.product.quantity}" maxlength="4" size="10">--%>
+<%--									<a href="#" class="J_Plus plus">+</a>--%>
+									<input type="number" min="0" max="99" name="shopNum"/>
 								</li>
 <%--								<td width="15%">--%>
 <%--									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥${item.value.product.shop_price}</span>--%>
@@ -144,9 +168,9 @@
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
 					<a href="javascript:void(0)" id="clear" class="clear">清空购物车</a>
 					
-					<a href="">
+<%--					<a href="">--%>
 						<%--提交表单 --%>
-						<input type="button" class="btn btn-warning" value="提交订单" name="submit">
+						<input type="submit" class="btn_create_order btn-warning" value="提交订单" name="submit"><span class="orderMsg">${order_msg }</span>
 					</a>
 				</div>
 			</div>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/JavaEE_QiMo.iml" filepath="$PROJECT_DIR$/.idea/JavaEE_QiMo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaEE_QiMo.iml" filepath="$PROJECT_DIR$/JavaEE_QiMo.iml" />
     </modules>
   </component>
 </project>

@@ -39,5 +39,14 @@
   	<servlet-name>demoServlet</servlet-name>
   	<url-pattern>/demoAction</url-pattern>
   </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cartServlet</servlet-name>
+        <servlet-class>com.store.controller.shopcart.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cartServlet</servlet-name>
+        <url-pattern>/cartAction</url-pattern>
+    </servlet-mapping>
   
 </web-app>

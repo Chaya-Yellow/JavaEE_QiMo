@@ -32,7 +32,7 @@
 
 						<li><a href="#">欢迎${loginUser.name }</a></li>
 						<li><a href="${pageContext.request.contextPath}/UserServlet?method=logOut">退出</a></li>
-						<li><a href="${pageContext.request.contextPath}/jsp/shopcart/cart.jsp">购物车</a></li>
+						<li><a href="${pageContext.request.contextPath}/jsp/shopcart/cart.jsp" id="btn_cart">购物车</a></li>
 						<li><a href="${pageContext.request.contextPath}/OrderServlet?method=findOrdersByUidWithPage&num=1">我的订单</a></li>
 			
 					</ol>

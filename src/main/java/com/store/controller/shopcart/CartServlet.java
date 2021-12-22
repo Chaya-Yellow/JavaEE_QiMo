@@ -36,65 +36,82 @@ public class CartServlet extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 获取页面传过来的参数
-		String action = req.getParameter("action"); //操作指令
-		String productId = req.getParameter("product_id");//商品编号
-		System.out.println("action=>"+action+";productId=>"+productId);
-		int clickCount=0;
-		clickCount++;
-		System.out.println("clickCount =>"+clickCount);
-		HttpSession session = req.getSession();
-		//从session获取购物车信息
-		Map<String, ShopItem> carts = (Map<String, ShopItem>) session.getAttribute("shop_carts");
+		String action = req.getParameter("action");
+		if ("create_order".equals(action)) {
+			String[] shopChks = req.getParameterValues("shopChk");
+			String[] shopNums = req.getParameterValues("shopNum");
 
-		if (carts == null) {
-			carts = new HashMap<String, ShopItem>();
-
-			List<Map<String, Object>> products  = CartService.findProducts();
-
-			if (products != null) {
-				for (Map<String, Object> productMap : products) {
-
-					ShopItem shopItem = new ShopItem();
-					Product product = new Product();
-					product.setPid(Long.parseLong(productMap.get("pid").toString()));
-					product.setPname(productMap.get("pname").toString());
-					product.setpImage(productMap.get("pimage").toString());
-					product.setMarketPrice(Double.parseDouble(productMap.get("market_price").toString()));
-					product.setShopPrice(Double.parseDouble(productMap.get("shop_price").toString()));
-					product.setCid(Long.parseLong(productMap.get("cid").toString()));
-					product.setpDesc(productMap.get("pdesc").toString());
-					product.setpState(productMap.get("pstate").toString());
-
-					shopItem.setProduct(product);
-					shopItem.setShopAmount(1);
-
-					carts.put(product.getPid().toString(), shopItem);
-				}
+			Long uid = 1L;//从session获取
+			int amt = CartService.createOrder(shopChks, shopNums, uid);
+			if (amt > 0) {
+				req.setAttribute("order_msg", "订单创建成功");
+			} else {
+				req.setAttribute("order_msg", "订单创建失败");
 			}
-
-			session.setAttribute("shopCartList", carts);
+			req.getRequestDispatcher("/jsp/shopcart/cart.jsp").forward(req, resp);
 		}
 
-		//添加商品到购物车
-		if(action != null && action.equals("add")) {
+		 else if ("my_shopcart".equals(action)) {
+			// 获取页面传过来的参数
+			String actionC = req.getParameter("action"); //操作指令
+			String productId = req.getParameter("product_id");//商品编号
+			System.out.println("action=>" + actionC + ";productId=>" + productId);
+			int clickCount = 0;
+			clickCount++;
+			System.out.println("clickCount =>" + clickCount);
+			HttpSession session = req.getSession();
+			//从session获取购物车信息
+			Map<String, ShopItem> carts = (Map<String, ShopItem>) session.getAttribute("shop_carts");
+
 			if (carts == null) {
 				carts = new HashMap<String, ShopItem>();
-				session.setAttribute("shop_carts", carts);
+
+				List<Map<String, Object>> products = CartService.findProducts();
+
+				if (products != null) {
+					for (Map<String, Object> productMap : products) {
+
+						ShopItem shopItem = new ShopItem();
+						Product product = new Product();
+						product.setPid(Long.parseLong(productMap.get("pid").toString()));
+						product.setPname(productMap.get("pname").toString());
+						product.setpImage(productMap.get("pimage").toString());
+						product.setMarketPrice(Double.parseDouble(productMap.get("market_price").toString()));
+						product.setShopPrice(Double.parseDouble(productMap.get("shop_price").toString()));
+						product.setCid(Long.parseLong(productMap.get("cid").toString()));
+						product.setpDesc(productMap.get("pdesc").toString());
+						product.setpState(productMap.get("pstate").toString());
+
+						shopItem.setProduct(product);
+						shopItem.setShopAmount(1);
+
+						carts.put(product.getPid().toString(), shopItem);
+					}
+				}
+
+				session.setAttribute("shopCartList", carts);
 			}
 
-			addCarts(productId,"测试商品"+productId, carts);
-		}
-		//从购物车扣减或移除商品
-		else if(action != null && action.equals("delete")) {
-			removeCarts(productId, carts);
-		}
-		//查看购物车内容
-		else if(action != null && action.equals("query")) {
-			queryCarts(carts);
-		}
+			//添加商品到购物车
+			if (actionC != null && actionC.equals("add")) {
+				if (carts == null) {
+					carts = new HashMap<String, ShopItem>();
+					session.setAttribute("shop_carts", carts);
+				}
 
-		req.getRequestDispatcher("/cart.jsp").forward(req, resp);
+				addCarts(productId, "测试商品" + productId, carts);
+			}
+			//从购物车扣减或移除商品
+			else if (actionC != null && actionC.equals("delete")) {
+				removeCarts(productId, carts);
+			}
+			//查看购物车内容
+			else if (actionC != null && actionC.equals("query")) {
+				queryCarts(carts);
+			}
+
+			req.getRequestDispatcher("/jsp/shopcart/cart.jsp").forward(req, resp);
+		}
 	}
 	/**
 	 * 添加商品到购物车
@@ -108,7 +125,7 @@ public class CartServlet extends HttpServlet{
 			Product product = new Product();
 			product.setPid(Long.valueOf(productId));
 			product.setPname(productName);
-			product.setShopPrice(12.0D);
+			product.setShopPrice(product.getShopPrice());
 			shopItem.setProduct(product);
 			carts.put(productId, shopItem);
 		}

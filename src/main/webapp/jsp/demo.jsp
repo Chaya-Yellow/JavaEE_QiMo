@@ -41,11 +41,11 @@ ul img{
 window.onload=function(){
 	
 	document.getElementById("search").onclick=function() {
-		location.href="/demoAction?action=list";
+		location.href="/JavaEE_QiMo/demoAction?action=list";
 	}
 	
 	document.getElementById("btn_cart").onclick=function() {
-		location.href="/demoAction?action=my_shopcart";
+		location.href="/JavaEE_QiMo/demoAction?action=my_shopcart";
 	}
 }
 </script>
@@ -53,7 +53,7 @@ window.onload=function(){
 <body>
 	<!-- 用户增加 -->
 	<h1>用户注册例子</h1>
-	<form method="post" action="/demoAction">
+	<form method="post" action="/JavaEE_QiMo/demoAction">
 		<input type="text" name="user_id">
 		<input type="text" name="user_name">
 		<input type="hidden" name="action" value="register">
@@ -62,7 +62,7 @@ window.onload=function(){
 	
 	<br>
 	<h1>购物车例子</h1>
-	<form method="post" action="/demoAction">
+	<form method="post" action="/JavaEE_QiMo/demoAction">
 	<input type="button" value="我的购物车" id="btn_cart"> 
 	<input type="submit" value="生成订单" id="btn_create_order"> <span class="orderMsg">${order_msg }</span>
 	<br>
@@ -106,7 +106,7 @@ window.onload=function(){
 						<p><font color="#FF0000">商城价：&yen;${p.shop_price}</font></p>
 					</div>
 				</c:forEach>
-				<jsp:include page="${pageContext.request.contextPath}/jsp/pageFile.jsp"></jsp:include>
+				<jsp:include page="${pageContext.request.contextPath}/JavaEE_QiMo/jsp/pageFile.jsp"></jsp:include>
 			</c:if>
 
 	
