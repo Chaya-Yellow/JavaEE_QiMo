@@ -86,6 +86,15 @@ window.onload=function(){
 		</div>
 	</c:if>
 	</form>
+
+
+
+
+
+
+
+
+
 	<br>
 	<h2>查詢列表的例子</h2>
 

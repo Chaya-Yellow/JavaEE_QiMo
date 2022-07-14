@@ -5,7 +5,6 @@ import com.store.dao.DemoDaoImpl;
 import com.store.dao.shopcart.ShopCartDaoImpl;
 import com.store.domain.Order;
 import com.store.domain.OrderItem;
-import com.store.service.DemoService;
 import com.store.utils.PageBean;
 import com.store.utils.StoreConstants;
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public class CartServiceImpl implements DemoService {
+public class CartServiceImpl implements CartService {
 	private DemoDao demoDao;
 	public CartServiceImpl() {
 		demoDao = new DemoDaoImpl();

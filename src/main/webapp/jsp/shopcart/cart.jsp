@@ -1,4 +1,7 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page import="java.util.Map" %>
+<%@ page import="com.store.domain.ShopItem" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!doctype html>
 <html>
@@ -41,44 +44,59 @@
 			window.onload=function(){
 
 				document.getElementById("btn_cart").onclick=function() {
+					alert('test');
 					location.href="/JavaEE_QiMo/cartAction?action=my_shopcart";
 				}
+			}
+			function fget(){
+				alert('111')
+				location.href="/JavaEE_QiMo/cartAction?action=my_shopcart";
 			}
 		</script>
 	</head>
 
 	<body>
 
+	<% HashMap<String, ShopItem> carts = (HashMap<String, ShopItem>) session.getAttribute("shopCartList");
+
+	for (HashMap.Entry<String,ShopItem> entry :carts.entrySet())
+	{%>
+	<h1><%=entry.getValue().getShopAmount()%></h1>
+	<h1><%=entry.getValue().getProduct().getShopPrice()%></h1>
+
+
+
 <%@ include file="/jsp/header.jsp" %>
 
 		<div class="container">
-				<c:if test="${empty shopCartList}">
-					<div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>
-				</c:if>
+<%--				<c:if test="${empty shopCartList}">--%>
+<%--					<div class="col-md-12">购物车中暂无数据,赶紧剁手去吧!</div>--%>
+<%--				</c:if>--%>
 
-			<input type="button" value="我的购物车" id="btn_cart">
-			<input type="button" value="我的购物车" id="btn_cart">
+<%--			<input type="button" value="我的购物车" id="btn_cart">--%>
+			<input type="button" value="我的购物车" id="btn_cart" onclick="fget()">
 			<input type="submit" value="生成订单" id="btn_create_order"> <span class="orderMsg">${order_msg }</span>
 			<br>
-			<c:if test="${not empty shopCartList}">
+<%--			<c:if test="${not empty shopCartList}">--%>
 
 				<input type="hidden" name="action" value="create_order">
 				<div class="shopCart">
 					<ul>
-						<c:forEach var="item" items="${shopCartList }" varStatus="vs">
+<%--						<c:forEach var="item" items="${shopCartList}" varStatus="vs">--%>
 							<li>
-								<input type="checkbox" name="shopChk" value="${item.key }">
+							<li>
+								<input type="checkbox" name="shopChk" value="<%=entry.getKey()%>">
 								<img src="${item.value.product.pImage }">
 								<a href="">
-									<span class="pName"><c:out value="${item.value.product.pname }" /></span>
+									<span class="pName"><%=entry.getValue().getProduct().getPname()%></span>
 								</a>
-								<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+								<span class="uPrice"><%=entry.getValue().getProduct().getShopPrice()%>元</span>&nbsp;&nbsp;
 								购买数量：<input type="number" min="0" max="99" name="shopNum"/>
 							</li>
-						</c:forEach>
+<%--						</c:forEach>--%>
 					</ul>
 				</div>
-			</c:if>
+<%--			</c:if>--%>
 
 			<div class="row">
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -95,15 +113,15 @@
 								<th>操作</th>
 							</tr>
 
-							<c:forEach var="item" items="${shopCartList }" varStatus="vs">
+<%--							<c:forEach var="item" items="${shopCartList }" varStatus="vs">--%>
 							<tr class="active">
 								<li>
-									<input type="checkbox" name="shopChk" value="${item.key }">--%>
+									<input type="checkbox" name="shopChk" value="<%=entry.getKey()%>>">
 								</li>
 
 								<li width="60" width="40%">
 <%--									<input type="hidden" name="id" value="22">--%>
-									<img src="${item.value.product.pImage }" width="70" height="60">
+									<img src="../../<%=entry.getValue().getProduct().getpImage()%>" width="70" height="60">
 								</li>
 
 <%--								<td>--%>
@@ -115,12 +133,12 @@
 <%--								</li>--%>
 								<li width="60" width="40%">
 									<%--									<input type="hidden" name="id" value="22">--%>
-									<span class="pName"><c:out value="${item.value.product.pname }" /></span>
+									<span class="pName"><c:out value="<%=entry.getValue().getProduct().getPname()%>" /></span>
 								</li>
 
 								<li width="20%">
-									￥<span class="uPrice"><c:out value="${item.value.product.MarketPrice }" />元</span>
-									￥<span class="uPrice"><c:out value="${item.value.product.shopPrice }" />元</span>&nbsp;&nbsp;
+									￥<span class="uPrice"><%=entry.getValue().getProduct().getMarketPrice()%>元</span>
+									￥<span class="uPrice"><%=entry.getValue().getProduct().getShopPrice()%>元</span>&nbsp;&nbsp;
 								</li>
 								<li width="10%">
 <%--									<a href="#" class="J_Minus no-minus">-</a>--%>
@@ -132,16 +150,16 @@
 <%--									<span class="subtotal"<c:out value="${item.value.product.pname }" />>￥${item.value.product.shop_price}</span>--%>
 <%--								</td>--%>
 								<li width="10%">
-									<input type="text" name="amountPrice" value="${item.value.product.quantity}*${item.value.product.shopPrice}" maxlength="4" size="10">
+									<input type="text" name="amountPrice" value="<%=entry.getValue().getShopAmount()%>*<%=entry.getValue().getProduct().getShopPrice()%>" maxlength="4" size="10">
 								</li>
 
 								<li>
 									<%-- <a href="javascript:void(0);" class="delete" onclick="delCart(${item.product.pid})">删除</a> --%>
-									<input type="hidden" name="pid" value="${item.product.pid}"/>
-									<a href="javascript:void(0);" title="${item.product.pid}" class="delete" id="${item.product.pid}">删除</a>
+									<input type="hidden" name="pid" value="<%=entry.getValue().getProduct().getPid()%>"/>
+									<a href="javascript:void(0);" title="<%=entry.getValue().getProduct().getPid()%>" class="delete" id="<%=entry.getValue().getProduct().getPid()%>">删除</a>
 								</li>
 							</tr>
-							</c:forEach>
+<%--							</c:forEach>--%>
 
 <%--							<c:forEach var="item" items="${shopCartList }" varStatus="vs">--%>
 <%--								<li>--%>
@@ -167,7 +185,7 @@
 			</em> 赠送积分: <em style="color:#ff6600;"></em>&nbsp;<br>
 				</div>
 				<div style="text-align: right">
-					商品金额: <strong style="color:#ff6600;">￥${totalPrice}元</strong>
+					商品金额: <strong style="color:#ff6600;">元</strong>
 				</div>
 
 				<div style="text-align:left;margin-top:10px;margin-bottom:10px;float: left">
@@ -189,6 +207,9 @@
 	
 		</div>
 
+
+
+	<%}%>
 <%@ include file="/jsp/footer.jsp" %>
 
 	</body>

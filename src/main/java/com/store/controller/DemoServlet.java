@@ -2,6 +2,7 @@ package com.store.controller;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,8 @@ public class DemoServlet extends HttpServlet{
 		} else if ("create_order".equals(action)) {
 			String[] shopChks = req.getParameterValues("shopChk");
 			String[] shopNums = req.getParameterValues("shopNum");
-			
+			System.out.println(Arrays.toString(shopChks));
+			System.out.println(Arrays.toString(shopNums));
 			Long uid = 1L;//从session获取
 			int amt = demoService.createOrder(shopChks, shopNums, uid);
 			if (amt > 0) {
